@@ -54,7 +54,7 @@ public class IDS17 {
      */
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException{
         try{
-            safeHandlingOfExternalEntities(Files.newInputStream(Paths.get("placeholder")), new DefaultHandler());
+            safeHandlingOfExternalEntities(Files.newInputStream(Paths.get("src/main/resources/gladiator.xml")), new DefaultHandler());
         }catch(Exception e){
             e.printStackTrace();
         }

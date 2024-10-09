@@ -50,7 +50,7 @@ public class IDS16 {
         };
 
         //Create stream to gather schema data
-        StreamSource ss = new StreamSource(new File("xml_schema1.xsd")); //edit schema
+        StreamSource ss = new StreamSource(new File("src/main/resources/xml_schema1.xsd")); //edit schema
 
         try{
             //create the xml schema
