@@ -1,7 +1,7 @@
+package rule_examples;
+
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
-
-import java.io.IOException;
 
 public class CustomXMLResolver1 implements EntityResolver {
 

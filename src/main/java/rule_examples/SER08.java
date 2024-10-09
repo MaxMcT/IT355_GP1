@@ -1,4 +1,4 @@
-
+package rule_examples;
 
 public class SER08 {
 

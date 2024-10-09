@@ -1,3 +1,5 @@
+package rule_examples;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -82,7 +84,7 @@ public class IDS00 {
      */
     public static void main(String[] args) {
         try {
-            queryRule("STR00-J");
+            System.out.println(queryRule("STR00-J"));
         }catch(Exception e){
             e.printStackTrace();
         }

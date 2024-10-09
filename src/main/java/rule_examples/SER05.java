@@ -1,3 +1,5 @@
+package rule_examples;
+
 import java.io.Serializable;
 
 /**
