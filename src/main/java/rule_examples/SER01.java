@@ -1,9 +1,6 @@
 package rule_examples;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 
 /**
  * SER01-J. Do not deviate from the proper signatures of serialization methods
@@ -31,6 +28,14 @@ public class SER01 implements Serializable {
             SINGLETON = new SER01();
         }
         return SINGLETON;
+    }
+
+    /**
+     * get the string value s
+     * @return s
+     */
+    public String getS(){
+        return s;
     }
 
     /**
@@ -73,5 +78,21 @@ public class SER01 implements Serializable {
         return SINGLETON;
     }
 
+    public static void main(String[] args) {
+        SER01 ser01 = SER01();
+
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("src/main/resources/ser01.ser"))){
+            outputStream.writeObject(ser01);
+            System.out.println("Ser01 example serialized to ser01.ser");
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("src/main/resources/ser01.ser"))){
+            SER01 test = (SER01)inputStream.readObject();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
 }

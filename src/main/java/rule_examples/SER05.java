@@ -7,7 +7,7 @@ import java.io.Serializable;
  * This is an example of a safe serialization of an inner class
  * As the inner class is a static class it can be serialized safely
  */
-public class SER05 {
+public class SER05 implements Serializable{
 
     private String fName, lName;
 
@@ -55,5 +55,10 @@ public class SER05 {
         public SER05 build(){
             return new SER05(this);
         }
+    }
+
+    public static void main(String[] args) {
+        SER05 test = new SerializableBuilder().setFName("Foo").setLName("Bar").build();
+
     }
 }

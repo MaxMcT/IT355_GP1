@@ -2,6 +2,7 @@ package bank;
 
 import com.mysql.cj.jdbc.JdbcConnection;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +42,9 @@ public class SafeSQL {
         return rs.getString("balance");
     }
 
-    static int deposit(int amount, String name) throws SQLException, IllegalArgumentException {
+    static int deposit(BigDecimal amount, String name) throws SQLException, IllegalArgumentException {
+        if(amount.intValue() <= 0)
+            return -1;
         Connection dbConnection = dbConnect();
 
         //Create a custom query where ? will be replaced by variable input
@@ -50,13 +53,15 @@ public class SafeSQL {
         PreparedStatement preparedStatement = dbConnection.prepareStatement(update);
         //The variable input is inserted in place of the ? but is never compiled as SQL
         //This prevents the user input from being interpreted as part of the SQL statement
-        preparedStatement.setString(1, Integer.toString(amount));
+        preparedStatement.setString(1, amount.toString());
         preparedStatement.setString(2, name);
 
         return preparedStatement.executeUpdate();
     }
 
-    static int credit(int amount, String name) throws SQLException, IllegalArgumentException {
+    static int credit(BigDecimal amount, String name) throws SQLException, IllegalArgumentException {
+        if(amount.intValue() <= 0)
+            return -1;
         Connection dbConnection = dbConnect();
 
         //Create a custom query where ? will be replaced by variable input
@@ -65,7 +70,7 @@ public class SafeSQL {
         PreparedStatement preparedStatement = dbConnection.prepareStatement(ruleQuery);
         //The variable input is inserted in place of the ? but is never compiled as SQL
         //This prevents the user input from being interpreted as part of the SQL statement
-        preparedStatement.setString(1, Integer.toString(amount));
+        preparedStatement.setString(1, amount.toString());
         preparedStatement.setString(2, name);
 
         return preparedStatement.executeUpdate();
@@ -86,7 +91,7 @@ public class SafeSQL {
     }
 
     public static void main(String[] args) throws SQLException {
-        System.out.println(credit(500, "Billy"));
+        System.out.println(deposit(new BigDecimal(500.001), "Billy"));
     }
 }
 
