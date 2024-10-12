@@ -1,6 +1,27 @@
 public class Bank {
 
     /**
+     * Creates file and closes it before the termination of the program
+     * @param filename
+     * @throws IOException
+     */
+    private static void createFile(String filename) throws IOException {
+        FileWriter out = null;
+        try {
+            out = new FileWriter(filename);
+            //Do something with file
+        } 
+        catch (IOException e) {
+            System.out.println("File failed to create: " + e);
+        }
+        finally {
+            if(out != null) {
+                out.close();
+            }
+        }
+    )
+        
+    /**
      * Temporary file is created and deleted before termination
      */
     public void createTempFileGood() {
