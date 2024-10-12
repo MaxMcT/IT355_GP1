@@ -1,7 +1,5 @@
 package bank;
 
-import com.mysql.cj.jdbc.JdbcConnection;
-
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,12 +8,21 @@ import java.sql.SQLException;
 
 import static java.sql.DriverManager.getConnection;
 
+/**
+ * This class should be used for any sql database interactions.
+ * The methods contained in this class use prepared statements to prevent SQL injection
+ */
 public class SafeSQL {
 
     static final String db = "jdbc:mysql://safe-sql-demo.chqqa2u8esx7.us-east-2.rds.amazonaws.com/bank";
     static final String username = "IT355";
     static final String password = "IT355sqldemo";
 
+    /**
+     * get a connection to the database
+     * @return a database connection
+     * @throws SQLException failed to connect to the database
+     */
     private static Connection dbConnect() throws SQLException {
         Connection dbConnection = getConnection(db, username, password);//provide connection link
         if(dbConnection == null){
@@ -23,6 +30,14 @@ public class SafeSQL {
         }
         return dbConnection;
     }
+
+    /**
+     * returns the balance of the provided account
+     * @param name the name of the account holder
+     * @return account balance
+     * @throws SQLException query failed
+     * @throws IllegalArgumentException invalid arguments were provided to the query
+     */
     static String getBalance(String name) throws SQLException, IllegalArgumentException {
         Connection dbConnection = dbConnect();
 
@@ -42,6 +57,14 @@ public class SafeSQL {
         return rs.getString("balance");
     }
 
+    /**
+     * This method deposits money into the account
+     * @param amount amount to deposit - must be positive
+     * @param name name of the account holder
+     * @return 1 = success anything else = failure
+     * @throws SQLException failed to update the account
+     * @throws IllegalArgumentException provided arguments were invalid
+     */
     static int deposit(BigDecimal amount, String name) throws SQLException, IllegalArgumentException {
         if(amount.intValue() <= 0)
             return -1;
@@ -59,6 +82,14 @@ public class SafeSQL {
         return preparedStatement.executeUpdate();
     }
 
+    /**
+     * This method credits money from the account
+     * @param amount the amount of money to credit
+     * @param name the name of the account holder
+     * @return 1 = success anything else = failure
+     * @throws SQLException failed to update the account
+     * @throws IllegalArgumentException provided arguments were invalid
+     */
     static int credit(BigDecimal amount, String name) throws SQLException, IllegalArgumentException {
         if(amount.intValue() <= 0)
             return -1;
@@ -75,7 +106,15 @@ public class SafeSQL {
 
         return preparedStatement.executeUpdate();
     }
-    
+
+
+    /**
+     * This method creates a account with 0 dollars
+     * @param name name attached to account
+     * @return 1 = success anything else = failure
+     * @throws SQLException failed to create the account
+     */
+
     static int openAccount(String name) throws SQLException {
         Connection dbConnection = dbConnect();
 

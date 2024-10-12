@@ -4,8 +4,17 @@ import java.text.Normalizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Recommendation -> IDS52-J. Prevent code injection
+ * IDS01-J. Normalize strings before validating them
+ * This is an example of normalizing a string before validation
+ */
 public class IDS01 {
-
+    /**
+     *
+     * @return
+     * @throws IllegalArgumentException
+     */
     private static String normalizationExample() throws IllegalArgumentException {
         //encoded img tag that could be dangerous in a html context
         String injectedAttack = "\u003cimg src=\u0027dangerous image injection\u0027 oneror=alert(1)\u003e";
