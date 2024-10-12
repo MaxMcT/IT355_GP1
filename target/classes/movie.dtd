@@ -1,0 +1,3 @@
+<!ELEMENT movie (title, genre)>
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT genre (#PCDATA)>
