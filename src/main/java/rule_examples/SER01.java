@@ -3,6 +3,7 @@ package rule_examples;
 import java.io.*;
 
 /**
+ * SEC58-J. Deserialization methods should not perform potentially dangerous operations - recommendation
  * SER01-J. Do not deviate from the proper signatures of serialization methods
  * This is an example of a class implementing serialization method with the correct signatures
  */

@@ -1,4 +1,0 @@
-<!ELEMENT check (to, from, amount)>
-<!ELEMENT to (#PCDATA)>
-<!ELEMENT from (#PCDATA)>
-<!ELEMENT amount (#PCDATA)>

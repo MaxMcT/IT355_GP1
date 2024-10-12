@@ -1,1 +1,0 @@
-java -Xverify:all ApplicationName
