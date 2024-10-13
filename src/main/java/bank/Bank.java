@@ -104,7 +104,7 @@ public class Bank {
                 out.close();
             }
         }
-    )
+    }
 
     /**
      * Saves account to temp file
