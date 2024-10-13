@@ -11,7 +11,7 @@ public class Bank {
     /**
     * Class for creating accounts for the bank
     */
-   static class BankAccount {
+   static class BankAccount implements Serializable {
         private String accountNumber;
         private String accountName;
         private double balance;
@@ -117,9 +117,10 @@ public class Bank {
         try {
             tempFile = File.createTempFile("bank_account", ".tmp");
             System.out.println("Temporary file created: " + tempFile);
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(tempFile));
-            oos.writeObject(account);
-            System.out.println("Account saved to temporary file: " + tempFile);
+            try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(tempFile))){
+                oos.writeObject(account);
+                System.out.println("Account saved to file: " + tempFile);
+            }
         } catch (IOException e) {
             System.out.println("Error saving account: " + e.getMessage());
         }
