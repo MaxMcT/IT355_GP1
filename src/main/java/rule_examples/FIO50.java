@@ -22,7 +22,12 @@ public class FIO50 {
         System.out.println("File created");
     }
 
-
+    /**
+     * Creates a file, while checking for file related errors
+     * takes in a string filename
+     * @param filename
+     * @throws FileNotFoundException
+     */
 public static void createFile(String filename) throws FileNotFoundException{
     try (OutputStream out = new BufferedOutputStream(
          Files.newOutputStream(Paths.get(filename), StandardOpenOption.CREATE_NEW))) {

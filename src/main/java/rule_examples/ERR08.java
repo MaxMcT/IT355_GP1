@@ -8,10 +8,12 @@ package rule_examples;
 public class ERR08 {
 
     @SuppressWarnings("unused")
+    /**
+     * Test Case showing how to deal with a null instead of catching a null pointer exception
+     * @param args None
+     */
     public static void main(String[] args) {
-        
         String name = null;
-
         if(name!=null){   // Checks to see if name is null before using it
             System.out.println(name);
         }

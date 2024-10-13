@@ -9,7 +9,11 @@ import java.io.IOException;
  * This is done in the while statement condition, checking for -1 in the end of stream indicator, then converting to a char to be able to print the file contents
  */
 public class FIO08 {
-    
+
+    /**
+     * Test case of reading a file by characters and distinguishing -1
+     * @param args None
+     */
     public static void main(String[] args) {
         
         try (FileReader reader = new FileReader("src/main/resources/FIO08.txt")) {

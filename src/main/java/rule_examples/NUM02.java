@@ -4,6 +4,10 @@ package rule_examples;
  * NUM02-J. Ensure that division and remainder operations do not result in divide-by-zero errors  
  */
 public class NUM02 {
+    /**
+     * Test Case for NUM02, ensuring to check if a number is zero to not divide by it
+     * @param args None
+     */
     public static void main(String[] args) {
     int num1=5, num2=0, result;
   

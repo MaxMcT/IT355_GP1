@@ -21,7 +21,6 @@ public class OBJ10 {
             return DEFAULT_SIZE; 
         }
     }
-
     public static void main(String[] args) {
         Square sq = new Square();
         System.out.println(Square.getDefaultSize());
