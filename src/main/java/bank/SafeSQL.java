@@ -1,5 +1,6 @@
 package bank;
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -125,6 +126,40 @@ public class SafeSQL {
         //The variable input is inserted in place of the ? but is never compiled as SQL
         //This prevents the user input from being interpreted as part of the SQL statement
         preparedStatement.setString(1, name);
+
+        return preparedStatement.executeUpdate();
+    }
+
+    static InputStream retrieveTransactions(String name) throws SQLException {
+        Connection dbConnection = dbConnect();
+
+        //Create a custom query where ? will be replaced by variable input
+        String insert = "SELECT transactions from accounts where name=?;";
+        //A prepared statement pre-compiles the query structure as sql and never compiles again
+        PreparedStatement preparedStatement = dbConnection.prepareStatement(insert);
+        //The variable input is inserted in place of the ? but is never compiled as SQL
+        //This prevents the user input from being interpreted as part of the SQL statement
+        preparedStatement.setString(1, name);
+
+        ResultSet rs =preparedStatement.executeQuery();
+        System.out.println(rs.toString());
+        if(!rs.next()){
+            throw new IllegalArgumentException();
+        }
+        return rs.getBinaryStream("transactions");
+    }
+
+    static int updateTransactions(String name, InputStream transactionBinary) throws SQLException {
+        Connection dbConnection = dbConnect();
+
+        //Create a custom query where ? will be replaced by variable input
+        String insert = "UPDATE accounts SET transactions=? WHERE name=?;";
+        //A prepared statement pre-compiles the query structure as sql and never compiles again
+        PreparedStatement preparedStatement = dbConnection.prepareStatement(insert);
+        //The variable input is inserted in place of the ? but is never compiled as SQL
+        //This prevents the user input from being interpreted as part of the SQL statement
+        preparedStatement.setBinaryStream(1, transactionBinary);
+        preparedStatement.setString(2, name);
 
         return preparedStatement.executeUpdate();
     }
