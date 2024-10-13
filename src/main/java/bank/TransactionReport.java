@@ -7,9 +7,21 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class can be used to create a report containing all the transactions made with an account
+ * This is achieved through storing a serialized version of this class with the associated class in the database
+ */
 public class TransactionReport implements Serializable {
-    ArrayList<String> transactions;
+    private ArrayList<String> transactions;
 
+    /**
+     * retrieves the transaction report associated with this account
+     * @param name name of the account holder
+     * @return The transactions associated with this account if there is an existing report null if not
+     * @throws SQLException There was a problem connecting to the database
+     * @throws IOException There was a problem reading in the serialized object from the input stream
+     * @throws ClassNotFoundException There was not a corresponding class found matching the deserialized object
+     */
     public ArrayList<String> loadTransactions(String name) throws SQLException, IOException, ClassNotFoundException {
         ByteArrayInputStream inputStream = (ByteArrayInputStream)SafeSQL.retrieveTransactions(name);
         Set<String> whitelist = new HashSet<String>(Arrays.asList(new String[]{"java.util.ArrayList", "bank.TransactionReport"}));
@@ -23,15 +35,38 @@ public class TransactionReport implements Serializable {
         return transactions;
     }
 
+    /**
+     * retrieve Transactions list
+     * @return ArrayList of transactions
+     */
     public ArrayList<String> getTransactions() {
         return transactions;
     }
 
-    public void addTransaction(String name, String transaction){
+    /**
+     * Add a transaction to the Report
+     * @param transaction String representing the transaction
+     */
+    public void addTransaction(String transaction){
         if(transactions==null){
             transactions=new ArrayList<>();
         }
         transactions.add(transaction);
+    }
+
+    /**
+     * upload the new Transaction Report ot the database
+     * @param name name of the associated account holder
+     */
+    public void updateTransactions(String name){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(byteArrayOutputStream)){
+            outputStream.writeObject(this);
+            SafeSQL.updateTransactions("billy", new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+            System.out.println("transaction example serialized to bytearray");
+        } catch (IOException | SQLException e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -69,6 +104,9 @@ public class TransactionReport implements Serializable {
         return this;
     }
 
+    /**
+     * This class extends ObjectInputStream to provide a filtering of deserialized classes
+     */
     private class SafeSerialization extends ObjectInputStream {
         public Set whitelist;
 
@@ -98,24 +136,6 @@ public class TransactionReport implements Serializable {
             return super.resolveClass(desc);
         }
 
-
-    }
-
-    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
-//        TransactionReport transactionReport = new TransactionReport();
-//        transactionReport.addTransaction("Billy", "Billy deposit 500");
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        try (ObjectOutputStream outputStream = new ObjectOutputStream(byteArrayOutputStream)){
-//            outputStream.writeObject(transactionReport);
-//            SafeSQL.updateTransactions("billy", new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
-//            System.out.println("transaction example serialized to bytearray");
-//
-//        } catch (IOException | SQLException e){
-//            e.printStackTrace();
-//        }
-        TransactionReport transactionReport = new TransactionReport();
-        transactionReport.loadTransactions("billy");
-        System.out.println(transactionReport.transactions.get(0));
 
     }
 }

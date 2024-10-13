@@ -17,11 +17,10 @@ public class IDS07 {
      */
     private static boolean validCmd(String userInput, boolean windows) {
         if(windows) {
-            return userInput=="dir"||userInput=="chdir";
+            return userInput=="dir";
         }else{//posix
-            return userInput=="ls"||userInput=="chdir";
+            return userInput=="ls";
         }
-
     }
 
     /**

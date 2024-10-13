@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * IDS55-J. Understand how escape characters are interpreted when strings are loaded - recommendation
+ * IDS50-J. Use conservative file naming conventions - recommendation
  */
 public class IDS50 {
     /**

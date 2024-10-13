@@ -130,7 +130,14 @@ public class SafeSQL {
         return preparedStatement.executeUpdate();
     }
 
-    static InputStream retrieveTransactions(String name) throws SQLException {
+    /**
+     * get the associated transcaction serialized object from the database
+     * @param name name associated with the account
+     * @return An input stream containing the serialized object
+     * @throws SQLException There was an error connecting to the database
+     * @throws IllegalArgumentException The provided input was invalid
+     */
+    static InputStream retrieveTransactions(String name) throws SQLException, IllegalArgumentException {
         Connection dbConnection = dbConnect();
 
         //Create a custom query where ? will be replaced by variable input
