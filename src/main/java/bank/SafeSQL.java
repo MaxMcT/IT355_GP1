@@ -51,7 +51,6 @@ public class SafeSQL {
         preparedStatement.setString(1, name);
 
         ResultSet rs =preparedStatement.executeQuery();
-        System.out.println(rs.toString());
         if(!rs.next()){
             throw new IllegalArgumentException();
         }
