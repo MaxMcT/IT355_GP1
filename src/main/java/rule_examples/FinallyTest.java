@@ -1,3 +1,4 @@
+package rule_examples;
 //ERRO4-J Jamie Morrone
 public class FinallyTest {
 
