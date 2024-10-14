@@ -7,7 +7,7 @@ package rule_examples;
  *
  * This class demonstrates safe logging practices to avoid log injection vulnerabilities.
  */
-public class LoggingExample {
+public class IDS03 {
     public void logUserInput(String userInput) {
         String sanitizedInput = sanitizeInput(userInput); // sanitize before logging
         System.out.println("User input: " + sanitizedInput);
