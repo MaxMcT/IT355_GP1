@@ -39,7 +39,7 @@ public class SafeSQL {
      * @throws SQLException query failed
      * @throws IllegalArgumentException invalid arguments were provided to the query
      */
-    static String getBalance(String name) throws SQLException, IllegalArgumentException {
+    public static double getBalance(String name) throws SQLException, IllegalArgumentException {
         Connection dbConnection = dbConnect();
 
         //Create a custom query where ? will be replaced by variable input
@@ -55,7 +55,7 @@ public class SafeSQL {
         if(!rs.next()){
             throw new IllegalArgumentException();
         }
-        return rs.getString("balance");
+        return Double.valueOf(rs.getString("balance"));
     }
 
     /**
@@ -66,7 +66,7 @@ public class SafeSQL {
      * @throws SQLException failed to update the account
      * @throws IllegalArgumentException provided arguments were invalid
      */
-    static int deposit(BigDecimal amount, String name) throws SQLException, IllegalArgumentException {
+    public static int deposit(BigDecimal amount, String name) throws SQLException, IllegalArgumentException {
         if(amount.intValue() <= 0)
             return -1;
         Connection dbConnection = dbConnect();
@@ -91,7 +91,7 @@ public class SafeSQL {
      * @throws SQLException failed to update the account
      * @throws IllegalArgumentException provided arguments were invalid
      */
-    static int credit(BigDecimal amount, String name) throws SQLException, IllegalArgumentException {
+    public static int credit(BigDecimal amount, String name) throws SQLException, IllegalArgumentException {
         if(amount.intValue() <= 0)
             return -1;
         Connection dbConnection = dbConnect();
@@ -116,16 +116,17 @@ public class SafeSQL {
      * @throws SQLException failed to create the account
      */
 
-    static int openAccount(String name) throws SQLException {
+    public static int openAccount(String name, BigDecimal amount) throws SQLException {
         Connection dbConnection = dbConnect();
 
         //Create a custom query where ? will be replaced by variable input
-        String insert = "INSERT INTO accounts (name, balance) VALUES (?, 0);";
+        String insert = "INSERT INTO accounts (name, balance) VALUES (?, ?);";
         //A prepared statement pre-compiles the query structure as sql and never compiles again
         PreparedStatement preparedStatement = dbConnection.prepareStatement(insert);
         //The variable input is inserted in place of the ? but is never compiled as SQL
         //This prevents the user input from being interpreted as part of the SQL statement
         preparedStatement.setString(1, name);
+        preparedStatement.setBigDecimal(2, amount);
 
         return preparedStatement.executeUpdate();
     }
@@ -137,7 +138,7 @@ public class SafeSQL {
      * @throws SQLException There was an error connecting to the database
      * @throws IllegalArgumentException The provided input was invalid
      */
-    static InputStream retrieveTransactions(String name) throws SQLException, IllegalArgumentException {
+    public static InputStream retrieveTransactions(String name) throws SQLException, IllegalArgumentException {
         Connection dbConnection = dbConnect();
 
         //Create a custom query where ? will be replaced by variable input
@@ -156,7 +157,7 @@ public class SafeSQL {
         return rs.getBinaryStream("transactions");
     }
 
-    static int updateTransactions(String name, InputStream transactionBinary) throws SQLException {
+    public static int updateTransactions(String name, InputStream transactionBinary) throws SQLException {
         Connection dbConnection = dbConnect();
 
         //Create a custom query where ? will be replaced by variable input

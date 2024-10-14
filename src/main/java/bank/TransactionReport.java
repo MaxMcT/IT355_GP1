@@ -1,6 +1,7 @@
 package bank;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,6 +60,7 @@ public class TransactionReport implements Serializable {
      * @param name name of the associated account holder
      */
     public void updateTransactions(String name){
+
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try (ObjectOutputStream outputStream = new ObjectOutputStream(byteArrayOutputStream)){
             outputStream.writeObject(this);

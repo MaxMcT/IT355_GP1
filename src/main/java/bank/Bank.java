@@ -1,6 +1,14 @@
+package bank;
+
+import bank.SafeSQL;
+import bank.TransactionReport;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -13,15 +21,15 @@ public class Bank {
     * Class for creating accounts for the bank
     */
    static class BankAccount implements Serializable {
-        private String accountNumber;
         private String accountName;
         private double balance;
+        private TransactionReport transactionReport;
+
 
         /**
          * Constructor for an account
          */
-        public BankAccount(String accountNumber, String accountName, double initialBalance) {
-            this.accountNumber = accountNumber;
+        public BankAccount(String accountName, double initialBalance) {
             this.accountName = accountName;
             this.balance = initialBalance;
         }
@@ -30,9 +38,11 @@ public class Bank {
          * Adds amount to account's balance
          * @param amount
          */
-        public void deposit(double amount) {
+        public void deposit(double amount) throws SQLException {
             if (amount > 0) {
                 balance += amount;
+                SafeSQL.deposit(new BigDecimal(amount), accountName);
+                transactionReport.addTransaction(accountName +": Deposited " + amount);
                 System.out.println("Deposited: " + amount);
             } else {
                 System.out.println("Invalid deposit amount.");
@@ -43,9 +53,11 @@ public class Bank {
          * Removes amount for account's balance
          * @param amount
          */
-        public void withdraw(double amount) {
+        public void withdraw(double amount) throws SQLException {
             if (amount > 0 && amount <= balance) {
                 balance -= amount;
+                SafeSQL.credit(new BigDecimal(amount), accountName);
+                transactionReport.addTransaction(accountName +": Credited " + amount);
                 System.out.println("Withdrawn: " + amount);
             } else {
                 System.out.println("Invalid withdrawal amount.");
@@ -66,14 +78,6 @@ public class Bank {
         }
 
         /**
-         * Getter for account number
-         * @return accountNumber
-         */
-        public String getAccountNumber() {
-            return accountNumber;
-        }
-
-        /**
          * Gettter for account name
          * @return name
          */
@@ -85,8 +89,7 @@ public class Bank {
          * Prints account number, name, and balance
          */
         public String toString() {
-            return "Account Number: " + accountNumber + "\n" +
-                   "Account Name: " + accountName + "\n" +
+            return "Account Name: " + accountName + "\n" +
                    "Balance: " + balance;
         }
     }
@@ -130,27 +133,27 @@ public class Bank {
         } catch (IOException e) {
             System.out.println("Error saving account: " + e.getMessage());
         }
+        account.transactionReport.updateTransactions(account.accountName);
     }
 
     /**
      * Creates an account from user input
      */
-    public static void createAccount() {
-        System.out.print("Enter Account Number: ");
-        String accountNumber = scanner.nextLine();
+    public static void createAccount() throws SQLException {
         System.out.print("Enter Account Name: ");
         String accountName = scanner.nextLine();
         System.out.print("Enter Initial Balance: ");
         double initialBalance = scanner.nextDouble();
         scanner.nextLine();  // Consume newline
-        account = new BankAccount(accountNumber, accountName, initialBalance);
+        account = new BankAccount( accountName, initialBalance);
         System.out.println("Account created successfully.");
+        SafeSQL.openAccount(accountName, new BigDecimal(initialBalance));
     }
 
     /**
      * Deposits money into an account
      */
-    public static void deposit() {
+    public static void deposit() throws SQLException {
         if (account == null) {
             System.out.println("No account available. Please create or load an account.");
             return;
@@ -163,7 +166,7 @@ public class Bank {
     /**
      * Withdraws money from an account
      */
-    public static void withdraw() {
+    public static void withdraw() throws SQLException {
         if (account == null) {
             System.out.println("No account available. Please create or load an account.");
             return;
@@ -184,20 +187,46 @@ public class Bank {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
+    private static void readCheck() throws IOException, ParserConfigurationException, SAXException, SQLException {
+        System.out.print("Enter file location of Check: ");
+        String filename = scanner.nextLine();
+        Check check = new Check();
+        check.readCheck(filename);
+        if(check.getTo() == account.accountName){
+            double amount = Double.valueOf(check.getAmount());
+            account.deposit(amount);
+            SafeSQL.credit(new BigDecimal(amount), check.getFrom());
+        }
+
+    }
+    private static void loadAccount() throws SQLException, IOException, ClassNotFoundException {
+        System.out.print("Enter Account Name: ");
+        String name = scanner.nextLine();
+        account = new BankAccount("name", 0);
+        account.accountName = name;
+        account.balance = SafeSQL.getBalance(name);
+        account.transactionReport = new TransactionReport();
+        account.transactionReport.loadTransactions(account.accountName);
+    }
+
     /**
      * Displays menu for the bank
      */
     public static void displayMenu() {
         System.out.println("\nBank Menu:");
         System.out.println("1. Create Account");
-        System.out.println("2. Deposit");
-        System.out.println("3. Withdraw");
-        System.out.println("4. Check Balance");
-        System.out.println("5. Save Account");
-        System.out.println("6. Calculate Estimated Interest");
-        System.out.println("7. Exit");
+        System.out.println("2. Load Account");
+        System.out.println("3. Deposit");
+        System.out.println("4. Withdraw");
+        System.out.println("5. Check Balance");
+        System.out.println("6. Save Account");
+        System.out.println("7. Calculate Estimated Interest");
+        System.out.println("8. Cash Check");
+        System.out.println("9. Exit");
         System.out.print("Choose an option: ");
     }
+
+
 
 /**
  * Calculate cumulative interest over 1 year at a 2% annual interest rate 
@@ -234,7 +263,7 @@ public static void calcEstInterest() {
 
 
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
             boolean running = true;
             while (running) {
                 displayMenu();
@@ -246,21 +275,27 @@ public static void calcEstInterest() {
                         createAccount();
                         break;
                     case 2:
-                        deposit();
+                        loadAccount();
                         break;
                     case 3:
-                        withdraw();
+                        deposit();
                         break;
                     case 4:
-                        checkBalance();
+                        withdraw();
                         break;
                     case 5:
-                        saveAccount();
+                        checkBalance();
                         break;
                     case 6:
-                        calcEstInterest();
+                        saveAccount();
                         break;
                     case 7:
+                        calcEstInterest();
+                        break;
+                    case 8:
+                        readCheck();
+                        break;
+                    case 9:
                         running = false;
                         System.out.println("Exiting...");
                         break;
