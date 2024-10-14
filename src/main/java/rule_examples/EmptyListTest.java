@@ -1,3 +1,4 @@
+package rule_examples;
 //MET55-J & METT54-J & EXP52-J Jamie Morrone
 import java.util.ArrayList;
 import java.util.Collections;
