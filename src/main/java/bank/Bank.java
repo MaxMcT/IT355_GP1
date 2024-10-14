@@ -192,7 +192,7 @@ public class Bank {
         String filename = scanner.nextLine();
         Check check = new Check();
         check.readCheck(filename);
-        if(check.getTo() == account.accountName){
+        if(check.getTo().equals(account.accountName)){
             double amount = Double.valueOf(check.getAmount());
             account.deposit(amount);
             SafeSQL.credit(new BigDecimal(amount), check.getFrom());
