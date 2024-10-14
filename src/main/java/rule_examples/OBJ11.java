@@ -8,10 +8,10 @@ package rule_examples;
  * This class demonstrates safe construction practices to prevent
  * partially initialized objects.
  */
-public class SafeConstructor {
+public class OBJ11 {
     private final String value;
 
-    public SafeConstructor(String value) {
+    public OBJ11(String value) {
         if (value == null) {
             throw new IllegalArgumentException("Value cannot be null"); // ensures object is not partially initialized
         }
