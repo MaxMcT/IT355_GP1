@@ -156,6 +156,13 @@ public class SafeSQL {
         return rs.getBinaryStream("transactions");
     }
 
+    /**
+     * this uploads a new transaction binary to the database
+     * @param name name of account
+     * @param transactionBinary binary stream of serialized data
+     * @return
+     * @throws SQLException
+     */
     public static int updateTransactions(String name, InputStream transactionBinary) throws SQLException {
         Connection dbConnection = dbConnect();
 
@@ -169,10 +176,6 @@ public class SafeSQL {
         preparedStatement.setString(2, name);
 
         return preparedStatement.executeUpdate();
-    }
-    
-    public static void main(String[] args) throws SQLException {
-        System.out.println(deposit(new BigDecimal(500.001), "Billy"));
     }
 }
 

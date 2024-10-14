@@ -138,6 +138,7 @@ public class Bank {
 
     /**
      * Creates an account from user input
+     * @throws SQLException
      */
     public static void createAccount() throws SQLException {
         System.out.print("Enter Account Name: ");
@@ -152,6 +153,7 @@ public class Bank {
 
     /**
      * Deposits money into an account
+     * @throws SQLException
      */
     public static void deposit() throws SQLException {
         if (account == null) {
@@ -165,6 +167,7 @@ public class Bank {
 
     /**
      * Withdraws money from an account
+     * @throws SQLException
      */
     public static void withdraw() throws SQLException {
         if (account == null) {
@@ -178,6 +181,7 @@ public class Bank {
 
     /**
      * Checks balance of account
+     * @throws SQLException
      */
     public static void checkBalance() {
         if (account == null) {
@@ -187,6 +191,13 @@ public class Bank {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
+    /**
+     * reads a check in from a file
+     * @throws IOException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws SQLException
+     */
     private static void readCheck() throws IOException, ParserConfigurationException, SAXException, SQLException {
         System.out.print("Enter file location of Check: ");
         String filename = UnicodeNormalizer.normalize(scanner.nextLine());
@@ -206,14 +217,25 @@ public class Bank {
         }
 
     }
+
+    /**
+     * Loads an account from the database
+     * @throws SQLException
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private static void loadAccount() throws SQLException, IOException, ClassNotFoundException {
         System.out.print("Enter Account Name: ");
         String name = UnicodeNormalizer.validate(scanner.nextLine());
         account = new BankAccount("name", 0);
         account.accountName = name;
-        account.balance = SafeSQL.getBalance(name);
-        account.transactionReport = new TransactionReport();
-        account.transactionReport.loadTransactions(account.accountName);
+        try {
+            account.balance = SafeSQL.getBalance(name);
+            account.transactionReport = new TransactionReport();
+            account.transactionReport.loadTransactions(account.accountName);
+        }catch (SQLException e){
+            System.out.println("Invalid account");
+        }
     }
 
     /**

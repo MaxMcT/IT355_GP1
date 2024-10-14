@@ -16,9 +16,23 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 
+/**
+ * This class verifies that valid xml is being read in
+ */
 public class XMLVerifier  {
-
+    /**
+     * This class checks that a whitelisted dtd is used
+     */
     private class XMLCheckResolver implements EntityResolver {
+        /**
+         * This classes does the actual checking of the dtd against the whitelist
+         * @param publicId The public identifier of the external entity
+         *        being referenced, or null if none was supplied.
+         * @param systemId The system identifier of the external entity
+         *        being referenced.
+         * @return a input source contating the xml if valid
+         * @throws IOException
+         */
         @Override
         public InputSource resolveEntity(String publicId, String systemId) throws IOException {
             String entityPath = "src/main/resources/check.dtd";
@@ -32,6 +46,12 @@ public class XMLVerifier  {
             }
         }
     }
+
+    /**
+     * The method checks to see that invalid xml is not uploaded
+     * @param xml xml to be checked
+     * @return if its a valid xml
+     */
     public boolean validateXML(String xml){
         InputSource xmlSource = new InputSource(new StringReader(xml));
 
