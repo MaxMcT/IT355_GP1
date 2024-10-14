@@ -57,7 +57,7 @@ public class Bank {
          * @return balance
          */
         public double getBalance() {
-            if(!Double.isNan(balance)) {
+            if(!Double.isNaN(balance)) {
             return balance;
         }
             else {
