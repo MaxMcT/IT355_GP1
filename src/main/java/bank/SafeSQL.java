@@ -15,9 +15,9 @@ import static java.sql.DriverManager.getConnection;
  */
 public class SafeSQL {
 
-    static final String db = "jdbc:mysql://safe-sql-demo.chqqa2u8esx7.us-east-2.rds.amazonaws.com/bank";
-    static final String username = "IT355";
-    static final String password = "IT355sqldemo";
+    static final String db = "";
+    static final String username = "";
+    static final String password = "";
 
     /**
      * get a connection to the database
