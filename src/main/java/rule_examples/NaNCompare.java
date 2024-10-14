@@ -1,3 +1,4 @@
+package rule_examples;
 //NUM07-J Jamie Morrone
 public class NaNCompare {
     public static void main(String[] args) {
