@@ -18,20 +18,20 @@ import java.io.StringReader;
 
 public class XMLVerifier  {
 
-    private class XMLCheckResolver implements EntityResolver{
+    private class XMLCheckResolver implements EntityResolver {
         @Override
         public InputSource resolveEntity(String publicId, String systemId) throws IOException {
             String entityPath = "src/main/resources/check.dtd";
             File entityFile = new File(entityPath);
             String fullEntityPath = entityFile.getCanonicalPath().replace("\\", "/");
             fullEntityPath = "file:///" + fullEntityPath;
-            if(systemId.equals(fullEntityPath)){
+            if (systemId.equals(fullEntityPath)) {
                 return new InputSource(entityPath);
-        }else{
+            } else {
                 return new InputSource();
             }
+        }
     }
-
     public boolean validateXML(String xml){
         InputSource xmlSource = new InputSource(new StringReader(xml));
 
@@ -77,5 +77,5 @@ public class XMLVerifier  {
         }
         return true;
     }
-    }
+
 }
