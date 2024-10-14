@@ -25,6 +25,9 @@ public class Check {
             int character;
 
             while ((character = reader.read()) != -1) {
+                  if ((character < Integer.MIN_VALUE) || (character > Integer.MAX_VALUE)) {
+                    throw new ArithmeticException("Integer overflow");
+                }
                 stringBuilder.append((char)character); // Processing the char and printing the output of the file
             }
         } catch (IOException e) {
