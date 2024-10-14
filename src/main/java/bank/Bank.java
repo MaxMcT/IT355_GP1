@@ -190,12 +190,19 @@ public class Bank {
     private static void readCheck() throws IOException, ParserConfigurationException, SAXException, SQLException {
         System.out.print("Enter file location of Check: ");
         String filename = UnicodeNormalizer.normalize(scanner.nextLine());
-        Check check = new Check();
-        check.readCheck(filename);
-        if(check.getTo().equals(account.accountName)){
-            double amount = Double.valueOf(check.getAmount());
-            account.deposit(amount);
-            SafeSQL.credit(new BigDecimal(amount), check.getFrom());
+        File file = new File(filename);
+        if(file.exists()) {
+            Check check = new Check();
+            check.readCheck(filename);
+            if (check.getTo().equals(account.accountName)) {
+                double amount = Double.valueOf(check.getAmount());
+                account.deposit(amount);
+                SafeSQL.credit(new BigDecimal(amount), check.getFrom());
+            }else{
+                System.out.println("This check was addressed to another account");
+            }
+        }else{
+            System.out.println("File does not exist");
         }
 
     }
