@@ -2,6 +2,7 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Bank {
     private static BankAccount account;
@@ -117,7 +118,7 @@ public class Bank {
         try {
             tempFile = File.createTempFile("bank_account", ".tmp");
             System.out.println("Temporary file created: " + tempFile);
-            try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(tempFile))){
+            try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(tempFile))){  
                 oos.writeObject(account);
                 System.out.println("Account saved to file: " + tempFile);
             }
@@ -213,9 +214,13 @@ public static void calcEstInterest() {
     BigDecimal dailyInterestRate = annualInterestRate.divide(BigDecimal.valueOf(365), 10, RoundingMode.HALF_EVEN);
 
     //Calculate cumulative interest for 1 year, updating daily
-    for (int day = 0; day < 365; day++) {
-        // balance += balance * dailyInterestRate
-        tempBalance = tempBalance.add(tempBalance.multiply(dailyInterestRate));
+    // for (int day = 0; day < 365; day++) {
+    //     // balance += balance * dailyInterestRate
+    //     tempBalance = tempBalance.add(tempBalance.multiply(dailyInterestRate));
+    // }
+
+    for (int day : IntStream.range(0, 365).toArray()) {
+    tempBalance = tempBalance.add(tempBalance.multiply(dailyInterestRate));
     }
 
     //Print the final amount after applying daily interest for 1 year
