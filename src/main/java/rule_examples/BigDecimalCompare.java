@@ -1,3 +1,4 @@
+package rule_examples;
 //NUM11-J Jamie Morrone
 import java.math.BigDecimal;
 
