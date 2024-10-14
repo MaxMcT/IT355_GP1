@@ -11,7 +11,7 @@ package rule_examples;
 public class OBJ13 {
     private final String[] mutableArray;
 
-    public MutableObjectExample() {
+    public OBJ13() {
         mutableArray = new String[]{"Initial", "Values"};
     }
 
