@@ -1,3 +1,4 @@
+package rule_examples;
 //NUM00-J Jamie Morrone
 public class IntegerOverflowTest {
 
