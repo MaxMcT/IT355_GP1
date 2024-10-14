@@ -11,8 +11,8 @@ import java.io.InputStream;
 public class IDS07 {
     /**
      * returns checks if the untrusted input is valid
-     * @param userInput A untrusted input to be passed to a terminal
-     * @param windows if true then its being run on a windows machine if not then its running on a posix machine
+     * @param userInput An untrusted input to be passed to a terminal
+     * @param windows if true then its being run on a Windows machine if not then its running on a posix machine
      * @return true if the input passes our whitelist
      */
     private static boolean validCmd(String userInput, boolean windows) {

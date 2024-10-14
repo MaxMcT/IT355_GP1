@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
  */
 public class IDS01 {
     /**
-     * Normalizes input and
-     * @return
-     * @throws IllegalArgumentException
+     * Normalizes input and validate
+     * @return the valid string if one exists
+     * @throws IllegalArgumentException An illegal value was passed
      */
     private static String normalizationExample() throws IllegalArgumentException {
         //encoded img tag that could be dangerous in a html context
@@ -27,9 +27,22 @@ public class IDS01 {
             throw new IllegalArgumentException();
         }
         String html = String.format("<ul><li>Apple</li> %s </li></ul>", injectedAttack);
+        String encodedHtml = HTMLEncode(html);
+        return encodedHtml;
 
-        return html;
+    }
 
+    private static String HTMLEncode(String input){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(char c : input.toCharArray()){
+            if(Character.isLetterOrDigit(c) || Character.isWhitespace(c)){
+                stringBuilder.append(c);
+            }else{
+                stringBuilder.append("&#" + (int)c + ";");
+            }
+        }
+        return stringBuilder.toString();
     }
     /**
      * This is a test case for IDS01

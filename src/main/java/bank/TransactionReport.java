@@ -62,7 +62,7 @@ public class TransactionReport implements Serializable {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try (ObjectOutputStream outputStream = new ObjectOutputStream(byteArrayOutputStream)){
             outputStream.writeObject(this);
-            SafeSQL.updateTransactions("billy", new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+            SafeSQL.updateTransactions(name, new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
             System.out.println("transaction example serialized to bytearray");
         } catch (IOException | SQLException e){
             e.printStackTrace();
@@ -125,8 +125,8 @@ public class TransactionReport implements Serializable {
          * Override the resolveClass to use your whitelist
          * @param desc an instance of class {@code ObjectStreamClass}
          * @return A class object corresponding to desc
-         * @throws IOException
-         * @throws ClassNotFoundException
+         * @throws IOException There was a problem reading from desc
+         * @throws ClassNotFoundException The class in the Object Stream did not match an existing class
          */
         @Override
         protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException {
