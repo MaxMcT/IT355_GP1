@@ -7,7 +7,7 @@ package rule_examples;
  *
  * This class demonstrates how to enforce security checks on sensitive operations.
  */
-public class SensitiveOperation {
+public class SEC04 {
     public void performOperation() {
         // Security check to ensure operation is allowed
         SecurityManager security = System.getSecurityManager();
