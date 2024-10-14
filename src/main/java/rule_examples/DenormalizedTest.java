@@ -1,3 +1,4 @@
+package rule_examples;
 //NUM54-J Jamie Morrone
 import java.math.BigDecimal;
 import java.math.MathContext;
