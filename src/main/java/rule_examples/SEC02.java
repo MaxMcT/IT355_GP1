@@ -8,7 +8,7 @@ package rule_examples;
  * This class demonstrates the necessity of defensive copying for
  * security checks to prevent TOCTOU vulnerabilities.
  */
-public class SecurityCheckExample {
+public class SEC02 {
     private String trustedInput;
 
     public void setInput(String input) {
