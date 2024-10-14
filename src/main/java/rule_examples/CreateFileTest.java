@@ -1,3 +1,4 @@
+package rule_examples;
 // FIO14-J Jamie Morrone
 import java.io.FileWriter;
 import java.io.IOException;
