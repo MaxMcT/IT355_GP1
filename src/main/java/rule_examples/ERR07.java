@@ -7,7 +7,7 @@ package rule_examples;
  *
  * This class demonstrates throwing specific exceptions for better error handling.
  */
-public class SpecificExceptionExample {
+public class ERR07 {
     public void riskyOperation() throws CustomException {
         boolean errorOccurred = true; 
         if (errorOccurred) {
