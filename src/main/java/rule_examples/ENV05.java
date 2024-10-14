@@ -7,7 +7,7 @@ package rule_examples;
  *
  * This class ensures that remote monitoring is disabled for security.
  */
-public class RemoteMonitoringExample {
+public class ENV05 {
     public static void disableRemoteMonitoring() {
         // Code to disable remote monitoring features
         System.setProperty("com.sun.management.jmxremote", "false");
