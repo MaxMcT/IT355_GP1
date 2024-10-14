@@ -17,4 +17,9 @@ public class ENV06 {
         // Main logic for production
         System.out.println("Production method executed.");
     }
+    // Main method for demonstration purposes
+    public static void main(String[] args) {
+        ENV06 env06 = new ENV06();
+        env06.productionMethod();
+    }
 }
