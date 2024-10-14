@@ -18,6 +18,6 @@ package rule_examples;
   public class OBJ08 {
     public static void main(String[] args) {
     Outer sensitive =  new Outer();
-    Outer.Inner data = sensitive.new Inner(); //Fails to compile, class attempts to access a private nested class
+    //Outer.Inner data = sensitive.new Inner(); //Fails to compile, class attempts to access a private nested class
     }
   }

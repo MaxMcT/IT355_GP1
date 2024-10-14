@@ -239,6 +239,18 @@ public class Bank {
     }
 
     /**
+     * this method lists past transactions
+     */
+    private static void listTransactions(){
+        if(account.transactionReport!=null){
+        for(String transaction: account.transactionReport.getTransactions()){
+            System.out.println(transaction);
+        }}else{
+            System.out.println("No transactions");
+        }
+    }
+
+    /**
      * Displays menu for the bank
      */
     public static void displayMenu() {
@@ -251,7 +263,8 @@ public class Bank {
         System.out.println("6. Save Account");
         System.out.println("7. Calculate Estimated Interest");
         System.out.println("8. Cash Check");
-        System.out.println("9. Exit");
+        System.out.println("9. list transactions");
+        System.out.println("10. Exit");
         System.out.print("Choose an option: ");
     }
 
@@ -291,7 +304,6 @@ public static void calcEstInterest() {
 }
 
 
-
   public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
             boolean running = true;
             while (running) {
@@ -325,6 +337,9 @@ public static void calcEstInterest() {
                         readCheck();
                         break;
                     case 9:
+                        listTransactions();
+                        break;
+                    case 10:
                         running = false;
                         System.out.println("Exiting...");
                         break;
