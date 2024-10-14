@@ -45,7 +45,7 @@ public class Check {
      * @throws ParserConfigurationException There was an error parsing your check
      */
     public void readCheck(String filename) throws SAXException, IOException, ParserConfigurationException {
-        String fileContents = readFile(filename);
+        String fileContents = UnicodeNormalizer.normalize((readFile(filename)));
         XMLVerifier xmlVerifier = new XMLVerifier();
         boolean parser = xmlVerifier.validateXML(fileContents);
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();

@@ -21,7 +21,7 @@ public class IDS01 {
         //Normalizes the unicode characters so they can be matched with regex
         String normalizedString = Normalizer.normalize(injectedAttack, Normalizer.Form.NFKC);
         //catch potentially dangerous characters with regex
-        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$"); // not a full list
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
         Matcher matcher = pattern.matcher(normalizedString);
         if(!matcher.find()){
             throw new IllegalArgumentException();

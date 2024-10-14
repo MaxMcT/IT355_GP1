@@ -141,7 +141,7 @@ public class Bank {
      */
     public static void createAccount() throws SQLException {
         System.out.print("Enter Account Name: ");
-        String accountName = scanner.nextLine();
+        String accountName = UnicodeNormalizer.validate(scanner.nextLine());
         System.out.print("Enter Initial Balance: ");
         double initialBalance = scanner.nextDouble();
         scanner.nextLine();  // Consume newline
@@ -189,7 +189,7 @@ public class Bank {
 
     private static void readCheck() throws IOException, ParserConfigurationException, SAXException, SQLException {
         System.out.print("Enter file location of Check: ");
-        String filename = scanner.nextLine();
+        String filename = UnicodeNormalizer.normalize(scanner.nextLine());
         Check check = new Check();
         check.readCheck(filename);
         if(check.getTo().equals(account.accountName)){
@@ -201,7 +201,7 @@ public class Bank {
     }
     private static void loadAccount() throws SQLException, IOException, ClassNotFoundException {
         System.out.print("Enter Account Name: ");
-        String name = scanner.nextLine();
+        String name = UnicodeNormalizer.validate(scanner.nextLine());
         account = new BankAccount("name", 0);
         account.accountName = name;
         account.balance = SafeSQL.getBalance(name);
