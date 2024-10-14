@@ -7,7 +7,7 @@ package rule_examples;
  *
  * This class illustrates safe comparison of class types using class objects.
  */
-public class ClassComparisonExample {
+public class OBJ09 {
     public void compareClasses() {
         Class<?> classA = String.class; // class reference
         Class<?> classB = String.class; // another class reference
