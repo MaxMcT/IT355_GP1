@@ -8,7 +8,7 @@ package rule_examples;
  * This class demonstrates the importance of not exposing mutable objects
  * directly to prevent unintended modifications.
  */
-public class MutableObjectExample {
+public class OBJ13 {
     private final String[] mutableArray;
 
     public MutableObjectExample() {
