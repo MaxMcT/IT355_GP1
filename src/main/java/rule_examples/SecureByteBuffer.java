@@ -1,3 +1,4 @@
+package rule_examples;
 //FIO5-J Jamie Morrone
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
