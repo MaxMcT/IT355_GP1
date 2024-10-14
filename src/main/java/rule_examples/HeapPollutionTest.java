@@ -1,3 +1,4 @@
+package rule_examples;
 //OBJ03-J Jamie Morrone
 import java.util.ArrayList;
 import java.util.List;
