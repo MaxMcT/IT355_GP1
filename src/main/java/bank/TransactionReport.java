@@ -108,7 +108,7 @@ public class TransactionReport implements Serializable {
      * This class extends ObjectInputStream to provide a filtering of deserialized classes
      */
     private class SafeSerialization extends ObjectInputStream {
-        public Set whitelist;
+        private Set whitelist;
 
         /**
          * Instantiate SafeSerialization with an input stream and a whitelist
