@@ -7,7 +7,7 @@ package rule_examples;
  *
  * This class ensures that debugging methods are not present in production code.
  */
-public class DebuggingExample {
+public class ENV06 {
     // Debug method for testing purposes, should not be in production
     // private static void debugMethod() {
     //     System.out.println("Debugging information");
