@@ -1,5 +1,5 @@
 package rule_examples;
-
+// Evan Rogers
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,7 +12,10 @@ import java.nio.file.StandardOpenOption;
  * FIO50-J. Do not make assumptions about file creation
  */
 public class FIO50 {
-
+    /**
+     * Example test case of creating a file and using file related checks to ensure to not make assumptions about file creation
+     * @param args None
+     */
     public static void main(String[] args) {
         try {
             createFile("file1");

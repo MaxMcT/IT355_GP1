@@ -220,7 +220,7 @@ public static void calcEstInterest() {
     // }
 
     for (int day : IntStream.range(0, 365).toArray()) {
-    tempBalance = tempBalance.add(tempBalance.multiply(dailyInterestRate));
+        tempBalance = tempBalance.add(tempBalance.multiply(dailyInterestRate));
     }
 
     //Print the final amount after applying daily interest for 1 year

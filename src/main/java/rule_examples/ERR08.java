@@ -1,5 +1,5 @@
 package rule_examples;
-
+// Evan Rogers
 /**
  * ERR08-J. Do not catch NullPointerException or any of its ancestors
  * This rule is an example of a way to handle not catching a null pointer exception

@@ -1,5 +1,5 @@
 package rule_examples;
-
+// Evan Rogers
 /**
  * NUM02-J. Ensure that division and remainder operations do not result in divide-by-zero errors  
  */

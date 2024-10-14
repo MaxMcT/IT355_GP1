@@ -1,5 +1,5 @@
 package rule_examples;
-
+// Evan Rogers
 import java.io.File;
 
 
@@ -8,7 +8,10 @@ import java.io.File;
  * This is done through try catch blocks and using if statements to account for file errors
  */
 public class FIO02 {
-
+    /**
+     * Example test case of handling file related errors
+     * @param args None
+     */
     public static void main(String[] args) {
         File file = new File("src/main/resources/FIO02.txt");
         if (!file.exists()) {

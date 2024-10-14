@@ -1,5 +1,5 @@
 package rule_examples;
-
+// Evan Rogers
 /**
  * OBJ08-J. Do not expose private members of an outer class from within a nested class
  * This code shows how the test class should have a compilation error after attempting to access a private nested class

@@ -1,5 +1,5 @@
 package rule_examples;
-
+// Evan Rogers
 /**
  * ERR50-J. Use exceptions only for exceptional conditions
  */
