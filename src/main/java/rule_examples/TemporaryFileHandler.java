@@ -1,3 +1,4 @@
+package rule_examples;
 //FIO03-J Jamie Morrone
 import java.io.File;
 import java.io.IOException;
